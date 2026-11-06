@@ -1,0 +1,20 @@
+# Home Assistant bridge (holds the HA token; devices never see it) backend. Plugged in by ./setup.sh (it lists apps/*/compose.yml in
+# compose.apps.yml). Paths are relative to this folder; ${...} come from
+# the repo's .env and app-secrets.env. Only reachable through Stratum's proxy.
+services:
+  home:
+    build:
+      context: ./backend
+      additional_contexts: { sdk: ../../sdk }
+    image: stratum-home:latest
+    container_name: stratum-home
+    restart: unless-stopped
+    user: "${STRATUM_UID:-1000}:${STRATUM_GID:-1000}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # HA on this machine
+    environment:
+      STRATUM_APP_SECRET: ${STRATUM_APP_SECRET_HOME}
+      STRATUM_URL: https://stratum:8930
+      HA_URL: ${HA_URL:-http://host.docker.internal:8123}
+      HA_TOKEN: ${HA_TOKEN:?set HA_TOKEN in .env (Home Assistant long-lived token), or remove home from compose.apps.yml}
+      HOME_USERS: ${HOME_USERS:-}

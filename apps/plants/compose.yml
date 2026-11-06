@@ -1,0 +1,17 @@
+# Plants backend. Plugged in by ./setup.sh (it lists apps/*/compose.yml in
+# compose.apps.yml). Paths are relative to this folder; ${...} come from
+# the repo's .env and app-secrets.env. Only reachable through Stratum's proxy.
+services:
+  plants:
+    build:
+      context: ./backend
+      additional_contexts: { sdk: ../../sdk }
+    image: stratum-plants:latest
+    container_name: stratum-plants
+    restart: unless-stopped
+    user: "${STRATUM_UID:-1000}:${STRATUM_GID:-1000}"
+    environment:
+      STRATUM_APP_SECRET: ${STRATUM_APP_SECRET_PLANTS}
+      STRATUM_URL: https://stratum:8930
+    volumes:
+      - ../../data/apps/plants:/data

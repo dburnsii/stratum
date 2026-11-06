@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stratum · gesture trainer</title>
+<script type="importmap">
+{ "imports": { "three": "/vendor/three.module.js", "three/addons/": "/vendor/" } }
+</script>
+<style>
+  html, body { margin: 0; height: 100%; background: #0e1014; color: #e9ecef; font: 16px/1.45 system-ui, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 32px 20px; }
+  h1 { font-size: 24px; margin: 0 0 8px; }
+  p, li { color: #adb5bd; }
+  button { font: 600 18px system-ui, sans-serif; padding: 14px 26px; border: 0; border-radius: 12px; background: #4c6ef5; color: #fff; }
+  button:disabled { background: #495057; }
+  a { color: #74c0fc; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main>
+  <p><a href="/">← Stratum</a></p>
+  <h1>Gesture trainer</h1>
+  <p>On the Quest, with your hands (put the controllers down). Each gesture is
+  asked for 5 times, right hand only: a count of 3, then do it while the bar runs.
+  Shoo comes in two steps (pick the cube, then throw it, or cancel). Your hands
+  are recorded with each take labelled, for training a gesture model later.</p>
+  <p>Takes on the cube or the button wait until your hand is there, then GO.
+  Between takes: <b>Redo</b> (that take was bad), <b>Pause</b>, <b>Skip</b>, on the
+  strip low on your left: poke them, or aim the beam and pinch.</p>
+  <p><b>Train</b> records labelled takes for a gesture model. <b>Test</b> lets you try
+  each gesture 5 times and shows whether today's detectors catch it, how fast, and
+  why not; a "nothing" round counts false alarms. Switch any time with <b>Mode</b>.</p>
+  <p><button id="enter" disabled>Checking…</button> <button id="enter-test" hidden disabled>🧪 Test</button></p>
+  <p id="note"></p>
+</main>
+<script type="module" src="/js/telemetry.js"></script>
+<script type="module" src="/js/trainer.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stratum · camera probe</title>
+<script type="importmap">
+{ "imports": { "three": "/vendor/three.module.js", "three/addons/": "/vendor/" } }
+</script>
+<!-- First, so even a failed app load gets reported. -->
+<script type="module" src="/js/telemetry.js"></script>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #0e1015; color: #e8eaf0; font: 18px/1.4 system-ui, sans-serif; }
+  canvas { position: fixed; inset: 0; z-index: -1; }
+  main { max-width: 560px; margin: 8vh auto; padding: 24px; }
+  button { font: inherit; padding: 14px 24px; border-radius: 10px; border: 1px solid #3d6af2; background: #3d6af2; color: #fff; cursor: pointer; margin: 0 8px 8px 0; }
+  button.alt { background: #1a1d24; border-color: #3a3f4c; }
+  button:disabled { opacity: .4; }
+  /* The browser stretches the overlay root fullscreen and transparent; the
+     visible box sits at the bottom so the rest of the screen stays tappable. */
+  #overlay { display: none; }
+  #overlay:xr-overlay { display: block; }
+  #ov-box { position: fixed; left: 12px; right: 12px; bottom: 12px; padding: 12px; border-radius: 14px; background: rgba(12,14,20,.75); }
+  #ov-status { margin: 0 0 10px; white-space: pre-wrap; font: 13px/1.4 ui-monospace, monospace; color: #e8eaf0; }
+  #log { white-space: pre-wrap; color: #9aa1b2; font: 14px/1.5 ui-monospace, monospace; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Camera probe <small id="version" style="font-size:14px;color:#9aa1b2"></small></h1>
+  <p>Enter AR. Quest: pull either trigger to drop a spinning cube at the controller. Phone: tap the screen.</p>
+  <button id="enter">Enter AR</button>
+  <button id="cam2d" class="alt">Test camera (2D)</button>
+  <pre id="log"></pre>
+</main>
+<!-- Shown on top of the camera view on phones (WebXR dom-overlay). -->
+<div id="overlay">
+  <div id="ov-box">
+    <pre id="ov-status"></pre>
+    <button id="ov-panel" class="alt">Panel here</button>
+    <button id="ov-exit" class="alt">Exit AR</button>
+  </div>
+</div>
+<script type="module" src="/js/probe.js"></script>
+</body>
+</html>

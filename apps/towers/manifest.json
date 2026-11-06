@@ -1,0 +1,22 @@
+{
+  "id": "towers",
+  "name": "Tower Defense",
+  "icon": "🏰",
+  "description": "Tabletop tower defense on a board the shape you choose: pinch the corners of the play area on a table or the floor (any outline, or ▭ for the classic board) and it lays out squares and a winding road inside it. Build arrow, cannon, frost, sniper and tesla towers beside the road, upgrade them, and press the wave button to send the next wave (early for bonus gold). Everyone in the space plays the same board. Quest: pinch a grass square to build, poke or pinch the buttons. Phone: tap a square, then a tower. Hold the board's wooden rim to move it.",
+  "entry": "client.js",
+  "permissions": [
+    "channel",
+    "state"
+  ],
+  "mount": "surface",
+  "category": "Games",
+  "color": "#5c940d",
+  "gestures": [
+    {
+      "icon": "🏰",
+      "name": "Tower Defense",
+      "how": "Pinch a grass square, pick a tower; ▶ sends a wave",
+      "more": "First set the play area: aim at each corner on the table (or floor) and pinch, in order around it, any shape; ✓ when done, ↶ undoes a corner, ▭ uses the classic board. 📐 Change the play area in its menu starts over on a new outline. Then pinch (or tap) a grass square beside the road and pick a tower: 🏹 arrow (quick, hits flyers), 💣 cannon (splash, ground only), ❄️ frost (slows), 🎯 sniper (long range), ⚡ tesla (chains). Pinch a tower to upgrade or sell it. Poke or pinch the ▶ Wave button to send the next wave; sending one early pays bonus gold. Hold the wooden rim to move the board."
+    }
+  ]
+}

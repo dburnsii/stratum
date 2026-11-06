@@ -1,0 +1,15 @@
+.venv
+data
+**/__pycache__
+*.pyc
+.git
+.pytest_cache
+tests
+apps/*/tests
+test-results
+.env
+app-secrets.env
+compose.apps.yml
+.private-patterns
+*.pem
+**/backend/*.db

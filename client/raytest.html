@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stratum · hand ray test</title>
+<script type="importmap">
+{ "imports": { "three": "/vendor/three.module.js", "three/addons/": "/vendor/" } }
+</script>
+<style>
+  html, body { margin: 0; height: 100%; background: #0e1014; color: #e9ecef; font: 16px/1.45 system-ui, sans-serif; }
+  main { max-width: 560px; margin: 0 auto; padding: 32px 20px; }
+  h1 { font-size: 24px; margin: 0 0 8px; }
+  p { color: #adb5bd; }
+  button { font: 600 18px system-ui, sans-serif; padding: 14px 26px; border: 0; border-radius: 12px; background: #4c6ef5; color: #fff; }
+  button:disabled { background: #495057; }
+  code { color: #ffd43b; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Hand ray test</h1>
+  <p>On the Quest, with your hands (put the controllers down). Aim at the numbered
+  targets and pinch. The panel in front of you, below eye height, has sliders for
+  the beam: poke them with a fingertip, or pinch on one and slide. Press
+  <b>Save</b> when it feels right; the values go to the log and can go into the
+  main app.</p>
+  <p><button id="enter" disabled>Checking…</button></p>
+  <p id="note"></p>
+</main>
+<script type="module" src="/js/telemetry.js"></script>
+<script type="module" src="/js/raytest.js"></script>
+</body>
+</html>

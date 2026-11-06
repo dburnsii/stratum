@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stratum · Quest camera test</title>
+<script type="importmap">
+{ "imports": { "three": "/vendor/three.module.js", "three/addons/": "/vendor/" } }
+</script>
+<script type="module" src="/js/telemetry.js"></script>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #0e1015; color: #e8eaf0; font: 18px/1.45 system-ui, sans-serif; }
+  main { max-width: 760px; margin: 5vh auto; padding: 24px; }
+  h1 { font-weight: 600; margin: 0 0 6px; }
+  .hint { color: #9aa1b2; font-size: 15px; }
+  button { font: inherit; padding: 14px 24px; border-radius: 12px; border: 0; background: #3d6af2; color: #fff; cursor: pointer; margin: 8px 8px 8px 0; }
+  button:disabled { opacity: .4; }
+  select { font: inherit; padding: 10px; border-radius: 10px; background: #1a1d24; color: inherit; border: 1px solid #3a3f4c; }
+  video { width: 100%; max-height: 40vh; background: #000; border-radius: 12px; margin-top: 10px; }
+  #log { white-space: pre-wrap; color: #9aa1b2; font: 13px/1.5 ui-monospace, monospace; margin-top: 12px; }
+  canvas.xr { position: fixed; inset: 0; z-index: -1; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Quest camera test</h1>
+  <p class="hint">Can Stratum see printed tags through the Quest's cameras? 1) Allow the headset camera. 2) Enter AR and look at a printed tag from about 50 cm, then move around it. Press the Meta button to leave AR. Results go to the server log.</p>
+  <button id="cam">1. Allow headset camera</button>
+  <select id="dev" hidden></select>
+  <button id="enter" disabled>2. Enter AR</button>
+  <video id="video" playsinline muted></video>
+  <div id="log"></div>
+</main>
+<script type="module" src="/js/questcam.js"></script>
+</body>
+</html>

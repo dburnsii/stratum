@@ -1,0 +1,143 @@
+{
+  "id": "notes",
+  "name": "Wall & Desk",
+  "icon": "📌",
+  "description": "Little things for walls and desks: sticky notes, index cards and labels; wall and desk clocks (any time zone); a month calendar you can write on and a day calendar; an outdoor thermometer and a weather forecast. Everyone in a shared space sees the same ones. Weather from Open-Meteo.",
+  "entry": "client.js",
+  "permissions": [],
+  "mount": "surface",
+  "category": "Tools",
+  "color": "#c9a227",
+  "variants": [
+    {
+      "key": "sticky",
+      "icon": "🟨",
+      "name": "Sticky note",
+      "description": "A square note for reminders and to-dos. Mark it done when it's done.",
+      "config": {
+        "kind": "sticky",
+        "color": "yellow"
+      }
+    },
+    {
+      "key": "card",
+      "icon": "🗒",
+      "name": "Index card",
+      "description": "A ruled card with room for a few lines: a recipe, a list, directions.",
+      "config": {
+        "kind": "card",
+        "color": "white"
+      }
+    },
+    {
+      "key": "label",
+      "icon": "🏷",
+      "name": "Label",
+      "description": "A narrow strip to name things: shelves, boxes, switches, plants.",
+      "config": {
+        "kind": "label",
+        "color": "white"
+      }
+    },
+    {
+      "key": "clock",
+      "icon": "🕰️",
+      "name": "Wall clock",
+      "description": "A round clock with a sweeping second hand. Set it to any time zone.",
+      "config": {
+        "kind": "clock"
+      }
+    },
+    {
+      "key": "digital",
+      "icon": "⏰",
+      "name": "Desk clock",
+      "description": "Big glowing digits and the date, for a desk or a shelf.",
+      "config": {
+        "kind": "digital"
+      }
+    },
+    {
+      "key": "calendar",
+      "icon": "📅",
+      "name": "Calendar",
+      "description": "This month on the wall, today circled. Tap a day to write on it; ◀ ▶ for other months.",
+      "config": {
+        "kind": "calendar"
+      }
+    },
+    {
+      "key": "today",
+      "icon": "📆",
+      "name": "Day calendar",
+      "description": "A tear-off desk calendar: today's date, big.",
+      "config": {
+        "kind": "today"
+      }
+    },
+    {
+      "key": "thermometer",
+      "icon": "🌡️",
+      "name": "Thermometer",
+      "description": "How warm it is outside, on a classic tube thermometer.",
+      "config": {
+        "kind": "thermometer"
+      }
+    },
+    {
+      "key": "weather",
+      "icon": "⛅",
+      "name": "Weather",
+      "description": "Now and the next five days: sky, highs and lows, chance of rain.",
+      "config": {
+        "kind": "weather"
+      }
+    }
+  ],
+  "settings": [
+    {
+      "key": "hand",
+      "type": "toggle",
+      "label": "Handwriting",
+      "help": "A handwritten look (off: clean print)",
+      "default": true
+    },
+    {
+      "key": "city",
+      "type": "text",
+      "label": "Home city",
+      "help": "Weather and the thermometer use it until you pick a place for one",
+      "placeholder": "e.g. Pittsburgh",
+      "default": ""
+    },
+    {
+      "key": "units",
+      "type": "choice",
+      "label": "Temperature",
+      "options": [
+        [
+          "auto",
+          "Automatic"
+        ],
+        [
+          "f",
+          "°F"
+        ],
+        [
+          "c",
+          "°C"
+        ]
+      ],
+      "default": "auto"
+    }
+  ],
+  "ownHandle": true,
+  "gestures": [
+    {
+      "icon": "📌",
+      "name": "Wall & Desk",
+      "how": "Tap a note to write; tap a calendar day to write on it",
+      "more": "Place a note, clock, calendar, thermometer or weather on a wall or table from Place → Wall & Desk. Tap a note or a calendar day to write. Hold the pin (notes) or the frame (everything else) to move it. Clocks: 🌍 in the menu changes the time zone. Weather and the thermometer: 📍 sets the place (or set a home city in the app's settings)."
+    }
+  ]
+}

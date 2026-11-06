@@ -1,0 +1,62 @@
+{
+  "id": "plants",
+  "name": "Plants",
+  "icon": "🪴",
+  "description": "Realistic potted plants that grow over real days. Water them or they wilt.",
+  "entry": "client.js",
+  "permissions": [
+    "backend",
+    "channel"
+  ],
+  "backend": "http://plants:8004",
+  "variants": [
+    {
+      "key": "succulent",
+      "icon": "🌵",
+      "name": "Succulent",
+      "config": {
+        "species": "succulent"
+      }
+    },
+    {
+      "key": "snake",
+      "icon": "🪴",
+      "name": "Snake plant",
+      "config": {
+        "species": "snake"
+      }
+    },
+    {
+      "key": "pothos",
+      "icon": "🌿",
+      "name": "Pothos",
+      "config": {
+        "species": "pothos"
+      }
+    }
+  ],
+  "category": "Decor",
+  "color": "#5c940d",
+  "settings": [
+    {
+      "key": "lapse",
+      "type": "choice",
+      "label": "Time-lapse length",
+      "options": [
+        [
+          3,
+          "3 s"
+        ],
+        [
+          6,
+          "6 s"
+        ],
+        [
+          10,
+          "10 s"
+        ]
+      ],
+      "default": 6
+    }
+  ]
+}

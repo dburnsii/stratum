@@ -1,0 +1,57 @@
+{
+  "id": "plane",
+  "name": "Little Plane",
+  "icon": "✈️",
+  "description": "A little taildragger and its runway: fly it around the room. It flies slowly, so it's easy indoors. Quest hands: look at the plane and hold one hand out flat like it, still, for 3 seconds; then tilt it up or down to climb or dive, roll it to bank (that turns it; on the ground it steers). Your thumb is the throttle: tucked along your fingers = full power, stuck out = engine off (and brakes on the ground). Land on the runway, a table or the floor; walls and furniture crash it (look at the runway with a flat hand to bring it back). Controllers: right stick pitch + roll, left stick rudder, right trigger throttle, left trigger brakes. Everyone in the space flies their own plane.",
+  "entry": "client.js",
+  "permissions": [
+    "channel"
+  ],
+  "mount": "surface",
+  "category": "Games",
+  "color": "#f4c430",
+  "settings": [
+    {
+      "key": "hand",
+      "type": "choice",
+      "label": "Flying hand",
+      "help": "Which hand flies the plane",
+      "options": [
+        [
+          "either",
+          "Either"
+        ],
+        [
+          "right",
+          "Right"
+        ],
+        [
+          "left",
+          "Left"
+        ]
+      ],
+      "default": "either"
+    },
+    {
+      "key": "assist",
+      "type": "toggle",
+      "label": "Easy flying",
+      "help": "Levels the wings when you let go, stops stalls",
+      "default": true
+    },
+    {
+      "key": "sound",
+      "type": "toggle",
+      "label": "Engine sound",
+      "default": true
+    }
+  ],
+  "gestures": [
+    {
+      "icon": "✈️",
+      "name": "Little Plane",
+      "how": "Look at the plane, hold a hand out flat and still for 3 s; thumb = throttle",
+      "more": "Look at the plane and hold one hand out flat, palm down, fingers forward, and keep it still for 3 seconds (the runway sign counts down; moving the hand starts the count over): the plane is yours. Tilt your fingers up to climb, down to dive; roll your hand to bank (that's how it turns; on the ground it steers). Thumb tucked along your fingers = full power; stuck straight out = engine off, and on the ground the brakes go on. Halfway = half power. Drop your hand and the plane flies itself level. Take off from the runway and land on it, on a table or on the floor; touching anything else is a crash: to bring it back, look at the runway and hold a hand out flat (controllers: the trigger)."
+    }
+  ]
+}

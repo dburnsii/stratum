@@ -1,0 +1,22 @@
+{
+  "id": "pinball",
+  "name": "Pinball",
+  "icon": "🕹",
+  "description": "Classic pinball, one machine for everyone in the space: whoever plays first plays, the rest watch, high scores are shared. Quest: pinch the plunger knob and pull it back, rest a hand by a red side button and curl your fingers in to flip (or poke the button) (controllers: triggers flip). Pinch-hold anywhere else to move it. Phone: tap the left or right half of the screen; hold and let go to launch.",
+  "entry": "client.js",
+  "permissions": [
+    "channel",
+    "state",
+    "physics"
+  ],
+  "category": "Games",
+  "color": "#7048e8",
+  "gestures": [
+    {
+      "icon": "🪩",
+      "name": "Pinball",
+      "how": "Pinch the knob and pull; curl fingers by a button to flip",
+      "more": "Pinch the plunger knob, pull it toward you, and let go to launch. To flip, rest a hand by a red side button like at a real machine and curl your fingers in; straighten them to let go. Poking the button works too. Holding anywhere else moves the machine as usual. Controllers: the triggers flip."
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "locator",
+  "name": "Find It",
+  "icon": "📍",
+  "description": "Remember where things are: mark a spot (\"spare keys\", \"the HDMI cables\") and find it later from the list on your menu's Home: an arrow in front of you points the way and a marker shows the spot, even inside a drawer. Place it once per space; everyone in the space shares the list.",
+  "entry": "client.js",
+  "permissions": [],
+  "mount": "surface",
+  "category": "Tools",
+  "color": "#e8590c",
+  "settings": [
+    {
+      "key": "pins",
+      "type": "toggle",
+      "label": "Always show pins",
+      "help": "Small pins on every marked spot, not only the one you're finding",
+      "default": false
+    }
+  ],
+  "gestures": [
+    {
+      "icon": "📍",
+      "name": "Find It",
+      "how": "Menu Home → Find: tap a thing, follow the arrow",
+      "more": "To mark something: on the menu's Home, under Find, tap ＋ Mark where something is, say or type what it is, then aim at the spot and pinch (or tap it on a phone). Marking a name again moves it. To find it: tap it in the list. An arrow floats in front of you pointing the way, with the distance, and a marker glows on the spot (through drawers and furniture). Walk up to it and it says found. The trash button forgets one."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "gestures",
+  "name": "Gesture Studio",
+  "icon": "🖐",
+  "description": "Practice and tune hand gestures. Pick one: a hand shows the perfect example; live meters show what the headset sees from your hand; record a few of your own (they're saved) and replay them, with a ✓ when the detector would catch it. Quest hands only.",
+  "entry": "client.js",
+  "permissions": [
+    "state"
+  ],
+  "mount": "surface",
+  "category": "Tools",
+  "color": "#0ca678"
+}

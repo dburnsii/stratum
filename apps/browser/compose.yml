@@ -1,0 +1,21 @@
+# Web browser panes (Chromium via Playwright; pages load from this server's network, LAN included) backend. Plugged in by ./setup.sh (it lists apps/*/compose.yml in
+# compose.apps.yml). Paths are relative to this folder; ${...} come from
+# the repo's .env and app-secrets.env. Only reachable through Stratum's proxy.
+services:
+  browser:
+    build:
+      context: ./backend
+      additional_contexts: { sdk: ../../sdk }
+    image: stratum-browser:latest
+    container_name: stratum-browser
+    restart: unless-stopped
+    user: "${STRATUM_UID:-1000}:${STRATUM_GID:-1000}"
+    environment:
+      STRATUM_APP_SECRET: ${STRATUM_APP_SECRET_BROWSER}
+      STRATUM_URL: https://stratum:8930
+      HOME: /tmp
+      TZ: ${TZ:-UTC}          # pages see your timezone (a UTC browser in New York looks like a bot)
+    shm_size: 2gb          # Chrome crashes with Docker's 64 MB /dev/shm
+    mem_limit: 6g          # a Chrome per player, several tabs each
+    volumes:
+      - ../../data/apps/browser:/data

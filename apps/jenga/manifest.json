@@ -1,0 +1,14 @@
+{
+  "id": "jenga",
+  "name": "Jenga",
+  "icon": "🧱",
+  "description": "A real-size block tower everyone in the space shares. Pull a block out and stack it on top without knocking the tower over. Quest: poke with a finger, or pinch a block to pull it. Phone: press a block and drag.",
+  "entry": "client.js",
+  "permissions": [
+    "channel",
+    "state",
+    "physics"
+  ],
+  "category": "Games",
+  "color": "#c08a4a"
+}

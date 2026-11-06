@@ -1,0 +1,15 @@
+{
+  "id": "fishtank",
+  "name": "Fish Tank",
+  "icon": "🐠",
+  "description": "A tank whose fish live on a server: they get hungry even when you're away. Tap to feed.",
+  "entry": "client.js",
+  "permissions": [
+    "backend",
+    "channel"
+  ],
+  "backend": "http://fishtank:8002",
+  "category": "Decor",
+  "color": "#1c7ed6",
+  "settings": []
+}

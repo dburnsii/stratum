@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stratum · printable tags</title>
+<!-- Same dictionary the detector uses, so printed tags always decode. -->
+<script src="/vendor/js-aruco2/cv.js"></script>
+<script src="/vendor/js-aruco2/aruco.js"></script>
+<script src="/vendor/js-aruco2/dictionaries/apriltag_36h11.js"></script>
+<style>
+  body { margin: 0; font: 16px/1.4 system-ui, sans-serif; color: #111; background: #fff; }
+  .controls { padding: 16px; background: #f1f3f7; display: flex; gap: 16px; flex-wrap: wrap; align-items: end; }
+  label { display: grid; gap: 4px; font-size: 14px; }
+  input { font: inherit; padding: 6px 8px; width: 110px; }
+  button, a.btn { font: inherit; padding: 8px 14px; border-radius: 8px; border: 1px solid #3d6af2; background: #3d6af2; color: #fff; text-decoration: none; cursor: pointer; }
+  .hint { flex-basis: 100%; color: #555; font-size: 14px; margin: 0; }
+  .sheet { display: flex; flex-wrap: wrap; gap: 12mm; padding: 12mm; }
+  figure { margin: 0; text-align: center; break-inside: avoid; }
+  figure svg { display: block; }
+  figcaption { font-size: 11px; color: #444; margin-top: 2mm; }
+  @media print { .controls { display: none; } .sheet { padding: 0; } @page { margin: 10mm; } }
+</style>
+</head>
+<body>
+<div class="controls">
+  <label>Black-square size (mm)<input id="size" type="number" min="20" max="300" value="100"></label>
+  <label>Tag ids (e.g. 0-3 or 0,5)<input id="ids" value="0-3"></label>
+  <button onclick="window.print()">Print</button>
+  <a class="btn" id="probe" href="/probe?tag=100">Open probe at this size</a>
+  <p class="hint">Print at 100% scale (no "fit to page"), then measure the black square: if it isn't the size above, enter what you measured in the probe link instead. Keep the white border around each tag. Flat and matte is best.</p>
+</div>
+<div class="sheet" id="sheet"></div>
+<script>
+  const dict = new AR.Dictionary('APRILTAG_36h11');
+  function parseIds(text) {
+    const ids = new Set();
+    for (const part of text.split(',')) {
+      const [a, b] = part.split('-').map((n) => parseInt(n, 10));
+      if (Number.isInteger(a)) for (let i = a; i <= (Number.isInteger(b) ? b : a); i++) if (i >= 0 && i < dict.codeList.length) ids.add(i);
+    }
+    return [...ids].slice(0, 40);
+  }
+  function render() {
+    const size = Math.max(20, Math.min(300, Number(document.getElementById('size').value) || 100));
+    const sheet = document.getElementById('sheet');
+    sheet.innerHTML = '';
+    for (const id of parseIds(document.getElementById('ids').value)) {
+      // The SVG is 10 units: 1 white margin, 8 black square (incl. data).
+      const fig = document.createElement('figure');
+      fig.innerHTML = dict.generateSVG(id).replace('<svg ', `<svg width="${size / 0.8}mm" height="${size / 0.8}mm" shape-rendering="crispEdges" `) +
+        `<figcaption>Stratum tag ${id} · black square ${size} mm</figcaption>`;
+      sheet.appendChild(fig);
+    }
+    document.getElementById('probe').href = `/probe?tag=${size}`;
+  }
+  document.getElementById('size').oninput = document.getElementById('ids').oninput = render;
+  render();
+</script>
+</body>
+</html>

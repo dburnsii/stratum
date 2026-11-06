@@ -1,0 +1,1 @@
+js-aruco2 2.0.0 (npm): src/cv.js, src/aruco.js, src/dictionaries/apriltag_36h11.js. Classic scripts (globals AR, CV); loaded by js/vision/tag-worker.js and tags.html.

@@ -1,0 +1,23 @@
+{
+  "id": "racing",
+  "name": "Mini Cars",
+  "icon": "🏎",
+  "description": "RC cars on a track on your table or floor; everyone in the space races their own car. Quest hands: hold both like a steering wheel and one appears; turn it to steer, pull it toward you for gas, push away to brake, all the way to reverse. Controllers: right trigger gas, left trigger brake / reverse, stick to steer. Stuck? Poke the orange ↺ button by the track (it also rescues itself). Phone: tap to go, tap left or right to steer, both to brake.",
+  "entry": "client.js",
+  "permissions": [
+    "channel",
+    "state",
+    "physics"
+  ],
+  "mount": "surface",
+  "category": "Games",
+  "color": "#e03131",
+  "gestures": [
+    {
+      "icon": "🏎",
+      "name": "Mini Cars",
+      "how": "Grip an imaginary wheel: pull = gas, push = brake",
+      "more": "Curl both hands like holding a wheel and one appears. Turn it to steer. Pull it toward you to go, push it away to brake, all the way out to reverse. Open your hands to let go. Stuck or off the road? Poke the orange ↺ button by the track (it also comes back by itself). Controllers: right trigger gas, left trigger brake / reverse, stick steers."
+    }
+  ]
+}

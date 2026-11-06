@@ -1,0 +1,27 @@
+{
+  "id": "sky",
+  "name": "Sky",
+  "icon": "🌌",
+  "description": "Turn the ceiling into a window: a starry night, the northern lights, a jungle canopy or the sea from below. Place it on the floor; it finds the ceiling from the room map, or pinch the ceiling's corners yourself.",
+  "entry": "client.js",
+  "permissions": [],
+  "category": "Ambience",
+  "color": "#3b2f7a",
+  "settings": [
+    {
+      "key": "sound",
+      "type": "toggle",
+      "label": "Sound",
+      "help": "Crickets, birds, the sea",
+      "default": true
+    }
+  ],
+  "gestures": [
+    {
+      "icon": "🌌",
+      "name": "Sky",
+      "how": "Pinch each corner of the ceiling to set its shape",
+      "more": "Place Sky on the floor. If the room map has your ceiling it appears by itself; otherwise (or with Set the ceiling in its menu) a panel comes up: first raise or lower the outline until it sits on your ceiling, then aim at each corner and pinch, in order around the room (any shape). Undo takes the last corner back; Done when it looks right. Change the theme, the brightness and the sound from its menu."
+    }
+  ]
+}

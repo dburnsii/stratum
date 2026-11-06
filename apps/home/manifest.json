@@ -1,0 +1,58 @@
+{
+  "id": "home",
+  "name": "Home",
+  "icon": "🏠",
+  "description": "Home Assistant switches, buttons and displays you hang on your walls. Pick the kind, hang it, then choose the device.",
+  "entry": "client.js",
+  "permissions": [
+    "backend",
+    "channel",
+    "identity"
+  ],
+  "backend": "http://home:8005",
+  "mount": "wall",
+  "ownHandle": true,
+  "category": "Home",
+  "color": "#e8590c",
+  "settings": [
+    {
+      "key": "labels",
+      "type": "toggle",
+      "label": "Name labels",
+      "help": "Show device names under controls",
+      "default": true
+    }
+  ],
+  "variants": [
+    {
+      "key": "switch",
+      "icon": "💡",
+      "name": "Switch",
+      "description": "A wall rocker for a light, plug or fan. Tap to toggle; the dot glows in the light's color.",
+      "config": {
+        "kind": "switch"
+      }
+    },
+    {
+      "key": "button",
+      "icon": "🔘",
+      "name": "Button",
+      "description": "A push button for a scene, script or button. Tap to run it.",
+      "config": {
+        "kind": "push"
+      }
+    },
+    {
+      "key": "display",
+      "icon": "📟",
+      "name": "Display",
+      "description": "A small screen showing a sensor, thermostat or player.",
+      "config": {
+        "kind": "readout"
+      }
+    }
+  ],
+  "requiresEnv": [
+    "HA_TOKEN"
+  ]
+}

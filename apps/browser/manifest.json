@@ -1,0 +1,39 @@
+{
+  "id": "browser",
+  "name": "Browser",
+  "icon": "🌐",
+  "description": "A real Chrome in the room: tabs, an address bar with suggestions, video and sound. Tap to click, swipe to scroll; the keyboard comes up in text fields. Runs on the server, with your logins kept.",
+  "entry": "client.js",
+  "permissions": [
+    "backend"
+  ],
+  "backend": "http://browser:8003",
+  "category": "Tools",
+  "color": "#495a7a",
+  "settings": [
+    {
+      "key": "home",
+      "type": "text",
+      "label": "Home page",
+      "placeholder": "Server default",
+      "default": ""
+    },
+    {
+      "key": "fps",
+      "type": "choice",
+      "label": "Picture",
+      "help": "Video is smooth and has sound; snapshots use less bandwidth",
+      "options": [
+        [
+          "smooth",
+          "Video"
+        ],
+        [
+          "saver",
+          "Snapshots"
+        ]
+      ],
+      "default": "smooth"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "golf",
+  "name": "Mini Golf",
+  "icon": "⛳",
+  "description": "Tabletop mini golf. Swipe to putt.",
+  "entry": "client.js",
+  "permissions": [
+    "backend",
+    "channel",
+    "state",
+    "physics"
+  ],
+  "backend": "http://golf:8001",
+  "category": "Games",
+  "color": "#2f9e44",
+  "settings": [
+    {
+      "key": "board",
+      "type": "toggle",
+      "label": "Leaderboard",
+      "help": "Show the scores panel by the course",
+      "default": true
+    }
+  ],
+  "gestures": [
+    {
+      "icon": "⛳",
+      "name": "Mini golf",
+      "how": "Your hand is the club: swing through the ball",
+      "more": "Any part of your hand counts. A gentle nudge rolls it; a faster swing hits it farther."
+    }
+  ]
+}

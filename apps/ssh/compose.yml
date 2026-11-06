@@ -1,0 +1,20 @@
+# SSH terminals (sessions, per-user keys and pinned host keys live in data/apps/ssh) backend. Plugged in by ./setup.sh (it lists apps/*/compose.yml in
+# compose.apps.yml). Paths are relative to this folder; ${...} come from
+# the repo's .env and app-secrets.env. Only reachable through Stratum's proxy.
+services:
+  ssh:
+    build:
+      context: ./backend
+      additional_contexts: { sdk: ../../sdk }
+    image: stratum-ssh:latest
+    container_name: stratum-ssh
+    restart: unless-stopped
+    user: "${STRATUM_UID:-1000}:${STRATUM_GID:-1000}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # this machine itself
+    environment:
+      STRATUM_APP_SECRET: ${STRATUM_APP_SECRET_SSH}
+      STRATUM_URL: https://stratum:8930
+      SSH_USERS: ${SSH_USERS:-}
+    volumes:
+      - ../../data/apps/ssh:/data

@@ -1,0 +1,14 @@
+# Local state and secrets (./setup.sh makes these; .private-patterns: tools/check_private.py)
+data/
+.env
+app-secrets.env
+compose.apps.yml
+*.pem
+
+# Python / test output
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+test-results/
+.private-patterns

@@ -1,0 +1,17 @@
+# Mini Golf backend. Plugged in by ./setup.sh (it lists apps/*/compose.yml in
+# compose.apps.yml). Paths are relative to this folder; ${...} come from
+# the repo's .env and app-secrets.env. Only reachable through Stratum's proxy.
+services:
+  golf:
+    build:
+      context: ./backend
+      additional_contexts: { sdk: ../../sdk }
+    image: stratum-golf:latest
+    container_name: stratum-golf
+    restart: unless-stopped
+    user: "${STRATUM_UID:-1000}:${STRATUM_GID:-1000}"
+    environment:
+      STRATUM_APP_SECRET: ${STRATUM_APP_SECRET_GOLF}
+      STRATUM_URL: https://stratum:8930
+    volumes:
+      - ../../data/apps/golf:/data

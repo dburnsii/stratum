@@ -1,0 +1,37 @@
+{
+  "id": "ssh",
+  "name": "Terminal",
+  "icon": "🖥",
+  "description": "SSH terminal panes. Tap the screen to type (keys go straight in), tap the title bar to connect. Sessions run on the server and keep going while you look away.",
+  "entry": "client.js",
+  "permissions": [
+    "backend",
+    "identity"
+  ],
+  "backend": "http://ssh:8006",
+  "category": "Tools",
+  "color": "#2f3b33",
+  "settings": [
+    {
+      "key": "host",
+      "type": "text",
+      "label": "Default host",
+      "placeholder": "user@host",
+      "default": ""
+    },
+    {
+      "key": "size",
+      "type": "choice",
+      "label": "Terminal size",
+      "options": [["80x24", "80×24"], ["100x30", "100×30"], ["120x36", "120×36"]],
+      "default": "80x24"
+    },
+    {
+      "key": "theme",
+      "type": "choice",
+      "label": "Colors",
+      "options": [["dark", "Dark"], ["green", "Green"], ["light", "Light"]],
+      "default": "dark"
+    }
+  ]
+}
