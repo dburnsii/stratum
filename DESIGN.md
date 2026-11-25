@@ -258,6 +258,8 @@ should take effect quickly):
 - ARCore depth is metric (meters, same scale as tracking); no scaling. 190 passing.
 
 
+**Plan: tagless visual localization, 2026-11-10 (docs only).** (user: RTAB-Map isn't needed for mapping, only for localizing without tags; the server has a GPU; better frames are fine while searching; lock once, then trust device motion; Quest and phone; ≤ 10 s; visual cues (bag of words), not the cross-device 3-D map; after the lock the device is busy, so nothing heavy then, but before it there's headroom; goal no tags at all, test on the existing Spaces, recreate them tagless later; runtime 320 px images keep building the Space.) Written up as §3.11. First step when it's built: the offline hold-out test on the existing tagged Spaces.
+
 **Publishing prep, main v96, 2026-11-05.** (user: credential + personal-info sweep before the first commit; monorepo; test user alice; drop the Netflix screenshot; a linear README; hand recording off by default.) Sweep: 250 publishable files, nothing from .env / app-secrets.env / .private-patterns, no other emails, private IPs, hosts, home paths or key-shaped strings. Test login `dave` → `alice` (7 test files). `apps/browser/client/demo/netflix.jpg` → `example.jpg` (an example.com-style page; tab "Example"). Monorepo kept: apps' tests import core test helpers and their clients import `/js/apps/kit/*`, so standalone isn't possible yet; `git subtree split -P apps/<id>` extracts one later. README: Setup as Part 1 (the computer, 5 steps: install → clone → ./setup.sh → optional .env → compose up) and Part 2 (each device, 5 steps), Settings, Privacy and security (hand recording), all 15 apps; setup.py's pointers fixed ("README → Setup, part 2"). **Hand recording is now off by default** (`stratum.handrec === '1'`); on via Settings → Record hand motion or by turning on gesture labelling; the trainer page always records. Tests: test_handrec (off until switched on).
 
 **trainer: Train / Test modes, 2026-10-30.** (user: the page jumps straight into training; I want a choice: test mode and train mode.) The page has 🎯 Train and 🧪 Test buttons (each starts the headset in that mode); in the headset the strip's ⇄ Mode button (4th, beside Redo / Pause / Skip) goes back to "Train or test?" with Train / Test on the strip. *Test*: `TEST_STEPS` × 5 tries, right hand: Revelio (expects a `cast`), Shoo the cube (`shoo`), Pick then cancel (a `spread` and no `shoo` by the end), Bring back the glow (`spread`; a `shoo` is wrong), Nothing (10 s of natural movement: a `cast` or `shoo` from either hand is a false alarm). Each try's GO window (5 s) runs a fresh `HandGestures` on both hands each frame (gaze from the head); the verdict comes as soon as it's certain or at the window's end: hit / miss (why: the detector's last near-miss reason, or picked-but-no-turn, fingertips never together, ...) / wrong / false / pass, shown red or green with the time to detection, high or low beep. Labels `source: 'test'` with result, why, ms; every detector event goes into the recording (`kind: 'detector'`, test step, take). Done: score per step. Redo takes a try (and its score) back. Tests: test_trainer (Mode → choice → Test; caught with time, miss with the near reason, shoo hit, cancel only sure at the end, a throw is wrong, false alarm from the left hand, a quiet "nothing" passes; score).
@@ -1104,6 +1106,7 @@ Observations, and the estimator fuses whatever is available:
 | **Persistent anchor restore** | Space pose via stored offset | good locally, but can be wiped or silently relocalize wrong | per device, ≤ 8 per site |
 | **Dock / touch** | controller resting in a printed outline or 3D-printed cradle = exact marker pose | ~mm | manual fallback, and for calibrating the camera (§3.7) |
 | **Room geometry** (later) | floor height + wall yaw | good yaw/height, weak along walls | per device room setup |
+| **Visual localization** (planned, §3.11) | Space + 4-DoF pose from camera images vs the Space's posed reference images | target < 5 cm / 2°; rejects when unsure | anywhere the Space has been seen before; the path to no tags |
 
 Bootstrapping a new Space: print a sheet of markers, put them up, look
 around. The first marker seen becomes the Space origin (gravity-aligned:
@@ -1342,6 +1345,85 @@ companion, Space-to-Space closures.
 **Unknowns:** Quest Browser depth access from JS (GPU-only would mean a
 GPU readback step); tag alignment error across devices (bounds map
 sharpness until ICP); Quest planes under unbounded; storage growth per Space.
+
+### 3.11 Visual localization: Spaces without tags (plan, 2026-11-10; not built)
+
+**Goal: no tags at all.** A device finds which Space it's in, and where, from
+what its camera sees; tags become optional (and are the test reference while
+this is built). Scope is *localization only*: lock onto the Space once, then
+trust the device's own tracking. Not RTAB-Map / SLAM: no map building for
+its own sake, no live tracking, and **no reliance on the fused cross-device 3-D
+map** (§3.10; depth from different devices disagrees by a few cm and we don't
+trust it for this). Visual cues decide; geometry only comes from each
+reference image's own pose (and its own depth, one device, one moment).
+
+**Why this works with the data we have:** ORB-SLAM3 failed (§0 v48) because
+*continuous tracking* needs ≥ 10 fps. A one-shot lock doesn't: a burst of a
+few frames is enough, and the device's own motion between them is known.
+
+**Compute budget.** Before the lock nothing is shown (no objects, apps, physics),
+so the device has headroom: it captures more and sharper frames. After the
+lock the device is busy rendering, so localization adds nothing heavy: only
+the ≤ 320 px keyframe images it already sends (§3.10). The **server does the
+heavy lifting** on its GPU, in its own container (PyTorch + matcher are big;
+the core server stays light, like an app backend).
+
+**Reference images (the "map").** Per Space: camera images with a pose in the
+Space frame, intrinsics, and that frame's depth when it has one. Sources:
+1. Tag-aligned sessions (today's Spaces: 523 + 837 image keyframes over 37
+   sessions). The poses come from tags, so they're the ground truth for testing.
+2. Visually localized sessions (once built): every keyframe image a locked
+   device sends gets pose = locked transform ∘ device pose, so users keep
+   building the Space just by using it. These poses are "known to some
+   extent": each image carries the lock's confidence and the time since the
+   lock (drift grows with it), and weaker images count for less and are
+   pruned first (per-area cap, keep varied viewpoints and lighting).
+3. The burst frames that produced a high-confidence lock (sharper; strict
+   bar, so a wrong lock can't poison the map).
+On ingest the GPU computes a **global descriptor** (learned bag of words:
+DINOv2-based retrieval, e.g. SALAD / BoQ; robust to lighting and viewpoint,
+where ORB + DBoW2 is fragile) and **local features** (SuperPoint / ALIKED)
+per image, kept beside the keyframe.
+
+**Lock-on (≤ 10 s, both Quest and phone):**
+1. Entering AR with no lock: "Finding your space…". The device sends a burst
+   of better frames (~1024 px gray, ~3/s; phone: ARCore camera image, Quest:
+   headset camera) with its own pose, intrinsics and gravity per frame.
+2. Retrieval: top ~10 reference images across *every Space the user can see*
+   (ACL server-side, §5). This also says which Space.
+3. Match (LightGlue) the frame to those images; lift matches to 3-D from the
+   reference image's pose (its own depth, or triangulated between two
+   reference images); PnP + RANSAC with gravity fixed: 4 DoF (x, y, z, yaw).
+4. **Confidence gate:** the device's relative motion between burst frames is
+   known, so every frame's answer must agree after applying it. Lock when ≥ 3
+   frames agree with enough inliers and one Space clearly beats the rest. A
+   confidently wrong lock is worse than none (§0 merge incident, 2026-10-28),
+   so ambiguous rooms (180° symmetry, moved clutter) are rejected, not guessed.
+5. Locked: the transform goes into the alignment estimator (§3.6) as an
+   Observation, like a tag sighting; objects appear. Not locked by 10 s:
+   "Couldn't find your space" with Keep looking / New space here.
+6. Re-lock only when the device's own tracking resets (reference space
+   reset, lost tracking) or a much better match disagrees strongly; small
+   corrections are smoothed, never jumps.
+
+**Spaces with no tag.** "New space here" starts a Space whose origin is the
+device's pose at that moment (gravity-aligned, only yaw kept, like the first
+tag today); that session's images, posed by device tracking, are its first
+reference images. Every later visit locks visually and adds more. A
+"New space here" that should have been an existing Space is the duplicate
+problem of 2026-10-28: offer the merge when a later lock shows two Spaces
+match the same place (visual match → transform, §0 `mergeOffer`).
+
+**Test plan (offline, before any client code):** existing tagged Spaces.
+Hold out one session; localize its image keyframes against the others;
+compare with its tag pose. Report correct locks (< 5 cm / 2°), rejections and
+wrong locks, per device and lighting, and how the 320 px reference images limit
+accuracy (and so whether sharper reference frames are needed while aligned).
+Then the live path on the GPU container; then recreate the Spaces without tags.
+
+**Unknowns:** 320 px gray reference images for matching; Quest headset
+camera image quality and access rate; day / night lighting; how often a
+room is too ambiguous; drift of runtime-posed images feeding back into the map.
 
 ## 4. Object model
 
