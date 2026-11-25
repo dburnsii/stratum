@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 # Real Chrome on a virtual display. Google Chrome on x86-64 (what sites see
 # most; it also plays H.264 video); Debian's Chromium on ARM, where Google
 # doesn't ship Chrome for Linux. Xvfb: the display. PulseAudio: the pages'

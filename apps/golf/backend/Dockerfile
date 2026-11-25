@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 FROM python:3.12-slim
 WORKDIR /app
 RUN pip install --no-cache-dir aiohttp==3.14.4
